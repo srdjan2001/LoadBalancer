@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <winsock2.h>
+#include <windows.h>
 #include "list.h"
 #include <string.h>
 #define PORT 5059
@@ -10,7 +11,7 @@
 
 
 
-int handleClients() {
+DWORD WINAPI handleClients(LPVOID lpParam) {
 
     
 
@@ -110,7 +111,15 @@ int handleClients() {
                     // Process the received data
                     buffer[bytesRead] = '\0';
                     appendToList(sharedList, buffer);
-                    printList(sharedList);
+                    /*
+                    
+                    //Samo provjera da li radi iscitavanje poslednjeg elementa
+                    
+                    char *retValue;
+                    retValue = getLastElement(sharedList);
+                    
+                    printf("ISCITANA POSLEDNJA POREKA %s", retValue);
+                    */
                     printf("Received message from client %d: %s\n", i, buffer);
                     send(clientSocket, "ODGOVOR", 8, 0);
                     

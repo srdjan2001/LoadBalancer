@@ -1,9 +1,2 @@
-﻿  lb_client_com.cpp
-C:\FAKS\ikp_lb\LB\lb_client_com.cpp(63,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\FAKS\ikp_lb\LB\lb_client_com.cpp(67,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\FAKS\ikp_lb\LB\lb_client_com.cpp(86,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\FAKS\ikp_lb\LB\lb_client_com.cpp(100,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-  list.cpp
-  main.cpp
-  Generating Code...
-  LB.vcxproj -> C:\FAKS\ikp_lb\x64\Debug\LB.exe
+﻿  list.cpp
+  LB.vcxproj -> C:\FAKS\Ind.kom.protokoli\LoadBalancer\ikp_lb\x64\Debug\LB.exe

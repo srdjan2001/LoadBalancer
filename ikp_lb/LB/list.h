@@ -1,3 +1,4 @@
+
 #ifndef LIST_H
 #define LIST_H
 
@@ -18,6 +19,7 @@ extern List* sharedList;
 List* initializeList();
 void appendToList(List* list, char* value);
 void printList(const List* list);
+char* getLastElement(const List* list);
 
 #endif
 #pragma once

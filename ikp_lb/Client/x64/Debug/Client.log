@@ -1,3 +1,4 @@
 ﻿  client.cpp
-C:\FAKS\ikp_lb\Client\client.cpp(61,59): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Client.vcxproj -> C:\FAKS\ikp_lb\x64\Debug\Client.exe
+C:\FAKS\Ind.kom.protokoli\LoadBalancer\ikp_lb\Client\client.cpp(61,59): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  LINK : C:\FAKS\Ind.kom.protokoli\LoadBalancer\ikp_lb\x64\Debug\Client.exe not found or not built by the last incremental link; performing full link
+  Client.vcxproj -> C:\FAKS\Ind.kom.protokoli\LoadBalancer\ikp_lb\x64\Debug\Client.exe

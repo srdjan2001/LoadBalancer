@@ -80,7 +80,7 @@ int handleWorkers() {
             int newSocket = accept(serverSocket, NULL, NULL);
             printf("New connection, socket fd is %d\n", newSocket);
 
-            // Add the new socket to the array of client sockets
+            // Add the new socket to the array of worker sockets
             for (int i = 0; i < MAX_WORKERS; ++i) {
                 if (workerSockets[i] == 0) {
                     workerSockets[i] = newSocket;
@@ -88,8 +88,10 @@ int handleWorkers() {
                 }
             }
         }
-
+        /*
+        * 
         // Check for data from workers
+
         for (int i = 0; i < MAX_WORKERS; ++i) {
             int workerSocket = workerSockets[i];
             if (FD_ISSET(workerSocket, &readSet)) {
@@ -108,6 +110,7 @@ int handleWorkers() {
                 }
             }
         }
+        */
     }
 
     closesocket(serverSocket);

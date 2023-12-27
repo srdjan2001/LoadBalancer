@@ -78,8 +78,23 @@ void appendToList(List* list, char* value) {
 void printList(const List* list) {
     Node* current = list->head;
     while (current != NULL) {
-        printf("%s ", current->data);
+        printf("%s", current->data);
         current = current->next;
     }
     printf("\n");
+}
+
+
+char* getLastElement(const List* list) {
+    
+    if (list->head == NULL) {
+        return NULL;
+    }
+    else {
+        Node* current = list->head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        return current->data;
+    }
 }

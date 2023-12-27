@@ -1,1 +1,1 @@
-int handleClients();
+DWORD WINAPI handleClients(LPVOID lpParam);
