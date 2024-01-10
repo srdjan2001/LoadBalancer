@@ -1,10 +1,13 @@
+
 #include <stdio.h>
 #include <winsock2.h>
-#include <windows.h>
+
 #include "list.h"
 #include <string.h>
 #include "worker_list.h"
-#define PORT 5059
+#include <process.h>
+#include <cstdlib>
+#define PORT 5000
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 256
 
@@ -13,7 +16,7 @@
 
 
 DWORD WINAPI handleClients(LPVOID lpParam) {
-
+    printf("Prvi Kurac");
     
 
 
@@ -54,12 +57,17 @@ DWORD WINAPI handleClients(LPVOID lpParam) {
         WSACleanup();
         return 1;
     }
+    unsigned long mode = 1;
+    ioctlsocket(serverSocket, FIONBIO, &mode);
 
     printf("Server listening on port %d...\n", PORT);
-
-    fd_set readSet;
+    timeval timeVal;
+    timeVal.tv_sec = 0;
+    timeVal.tv_usec = 100;
+    
     while (1) {
-        
+        //WaitForSingleObject(muteks, INFINITE);
+        fd_set readSet;
         FD_ZERO(&readSet);
         FD_SET(serverSocket, &readSet);
 
@@ -77,13 +85,17 @@ DWORD WINAPI handleClients(LPVOID lpParam) {
         }
 
         // Use select to check for readability of sockets
-        int activity = select(maxSocket + 1, &readSet, NULL, NULL, NULL);
+        
+        int activity = select(maxSocket + 1, &readSet, NULL, NULL, &timeVal);
 
         if (activity == -1) {
             perror("Select error");
             exit(EXIT_FAILURE);
         }
-
+        if (activity == 0) {
+            continue;
+        }
+        
         // Check for incoming connection
         if (FD_ISSET(serverSocket, &readSet)) {
             int newSocket = accept(serverSocket, NULL, NULL);
@@ -129,9 +141,10 @@ DWORD WINAPI handleClients(LPVOID lpParam) {
             }
         }
         
+        //ReleaseMutex(muteks);
     }
 
     closesocket(serverSocket);
     WSACleanup();
-    return 0;
+    //ExitThread(0);
 }

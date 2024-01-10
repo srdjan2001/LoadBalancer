@@ -1,3 +1,6 @@
+#define WIN32_LEAN_AND_MEAN      // Exclude rarely-used stuff from Windows headers
+
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
@@ -62,7 +65,7 @@ void appendToList(List* list, char* value) {
     if (newNode != NULL) {
         strcpy_s(newNode->data, sizeof(value),  value);
         newNode->next = NULL;
-        WaitForSingleObject(muteks, INFINITE);
+        
         if (list->head == NULL) {
             list->head = newNode; // If the list is empty, set the new node as the head
         }
@@ -73,7 +76,7 @@ void appendToList(List* list, char* value) {
             }
             current->next = newNode; // Append the new node to the end of the list
         }
-        Releasemuteks(muteks);
+        
     }
 }
 
@@ -103,10 +106,10 @@ char* getLastElement(const List* list) {
 }
 
 void removeLastElement(List* l) {
-    Node* current = l->head;
-    while (current->next->next != NULL) {
-        current = current->next;
+    if (l->head == NULL) {
+        return;
     }
-    free(current->next);
-    current->next = NULL;
+    Node* temp = l->head;
+    l->head = l->head->next;
+    free(temp);
 }

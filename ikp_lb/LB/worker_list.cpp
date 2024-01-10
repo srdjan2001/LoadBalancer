@@ -1,3 +1,4 @@
+#include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "worker_list.h"
@@ -38,25 +39,40 @@ void moveWorkerNode(WorkerList* from, WorkerList* to, int workerSocket) {
     workerNode* node_from = from->head;
     
     if (node_from != NULL) {
-        WaitForSingleObject(muteks, INFINITE);
-        while (node_from != NULL) {
-            if (node_from->workerSocket == workerSocket) {
-                break;
+        //WaitForSingleObject(muteks, INFINITE);
+        while (node_from->next != NULL) {
+            if (node_from->next->workerSocket == workerSocket) {
+                printf("naso");
+                workerNode* node_toMove = node_from->next;
+                appendToWorkerList(to, node_toMove->workerSocket);
+                if (node_from->next->next != NULL) {
+                    node_from->next = node_from->next->next;
+                }
+                else {
+                    node_from->next = NULL;
+                }
+                free(node_toMove);
+                return;
+               
             }
-            from->head = from->head->next;
+            if (node_from->workerSocket == workerSocket) {
+                workerNode* nody = node_from;
+                appendToWorkerList(to, nody->workerSocket);
+                to->head = NULL;
+                free(nody);
+                return;
+            }
+            //from->head = from->head->next;
+            node_from = node_from->next;
         }
         
-
-        if (to->head == NULL) {
+        if (node_from != NULL) {
             
-            to->head = node_from;
         }
-        else {
-            node_from->next = to->head;
-            to->head = node_from;
-        }
+
+        
     }
-    ReleaseMutex(muteks);
+    //ReleaseMutex(muteks);
 }
 
 int getFirstFreeWorker() {

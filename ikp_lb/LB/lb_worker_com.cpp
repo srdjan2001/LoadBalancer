@@ -3,7 +3,9 @@
 #include "worker_list.h"
 #include "list.h"
 
-#define PORT 10000
+#include <process.h>
+#include <cstdlib>
+#define PORT 5001
 #define MAX_WORKERS 10
 #define BUFFER_SIZE 256
 
@@ -12,6 +14,8 @@
 
 
 DWORD WINAPI handleWorkers(LPVOID lpParam) {
+    printf("Kurcina");
+    //Sleep(100);
     WSADATA wsaData;
     SOCKET workerSockets[MAX_WORKERS];
     for (int i = 0; i < MAX_WORKERS; i++) {
@@ -23,7 +27,7 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
         return 1;
     }
 
-    SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (serverSocket == INVALID_SOCKET) {
         printf("Error creating socket: %ld\n", WSAGetLastError());
         WSACleanup();
@@ -42,6 +46,9 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
         return 1;
     }
 
+    unsigned long mode = 1;
+    ioctlsocket(serverSocket, FIONBIO, &mode);
+
     if (listen(serverSocket, SOMAXCONN) == SOCKET_ERROR) {
         printf("Listen failed: %ld\n", WSAGetLastError());
         closesocket(serverSocket);
@@ -51,10 +58,25 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
 
     printf("Server listening on port %d...\n", PORT);
 
-    fd_set readSet;
+
+    timeval timeVal;
+    timeVal.tv_sec = 0;
+    timeVal.tv_usec = 100;
+   
     while (1) {
+        
+        //WaitForSingleObject(muteks, INFINITE);
+        fd_set readSet;
+        fd_set writeSet;
+
         FD_ZERO(&readSet);
+        FD_ZERO(&writeSet);
+       
         FD_SET(serverSocket, &readSet);
+        //FD_SET(serverSocket, &writeSet);
+
+        
+        
 
         int maxSocket = serverSocket;
 
@@ -70,31 +92,43 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
         }
 
         // Use select to check for readability of sockets
-        int activity = select(maxSocket + 1, &readSet, NULL, NULL, NULL);
+
+        int activity = select(0, &readSet, NULL, NULL, &timeVal);
 
         if (activity == -1) {
             perror("Select error");
             exit(EXIT_FAILURE);
         }
 
+       
         // Check for incoming connection
         if (FD_ISSET(serverSocket, &readSet)) {
+            
             int newSocket = accept(serverSocket, NULL, NULL);
             printf("New connection, socket fd is %d\n", newSocket);
+
+            printf("ALO");
+            if (newSocket == SOCKET_ERROR) {
+                printf("Error accpeting new client");
+            }
 
             // Add the new socket to the array of worker sockets
             for (int i = 0; i < MAX_WORKERS; ++i) {
                 if (workerSockets[i] == 0) {
                     workerSockets[i] = newSocket;
+                    
                     appendToWorkerList(freeWorkers, newSocket);
                     break;
                 }
             }
         }
+        
+        
         if (sharedList->head != NULL) {
             int workerSocket = getFirstFreeWorker();
             char* message = sharedList->head->data;
-            int bytesRead = recv(workerSocket, message, sizeof(message), 0);
+            printf("Uso je u slanje");
+            int bytesRead = send(workerSocket, sharedList->head->data, sizeof(sharedList->head->data), 0);
             if (bytesRead <= 0) {
                 // Connection closed or error
                 closesocket(workerSocket);
@@ -106,7 +140,7 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
                 moveWorkerNode(freeWorkers, busyWorkers, workerSocket);
             }
         }
-
+        
         for (int i = 0; i < MAX_WORKERS; ++i) {
             int workerSocket = workerSockets[i];
             if (FD_ISSET(workerSocket, &readSet)) {
@@ -129,9 +163,11 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
             }
         }
         
+        //ReleaseMutex(muteks);
     }
-
+    printf("\nispod while true");
     closesocket(serverSocket);
     WSACleanup();
-    return 0;
+    //ExitThread(0);
+    
 }

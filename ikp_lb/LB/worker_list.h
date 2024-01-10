@@ -1,5 +1,8 @@
 // Node structure
-#include <winSock2.h>
+#ifndef WORKER_LIST_H
+#define WORKER_LIST_H
+
+#include <windows.h>
 
 typedef struct workerNode {
     int workerSocket;
@@ -22,3 +25,5 @@ void moveWorkerNode(WorkerList* from, WorkerList* to, int workerSocket);
 int getFirstFreeWorker();
 //void printList(const WorkerList* list);
 //char* getLastElement(const WorkerList* list);
+#endif
+#pragma once

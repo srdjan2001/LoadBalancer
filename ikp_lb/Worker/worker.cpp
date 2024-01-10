@@ -1,3 +1,4 @@
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stdio.h>
@@ -6,7 +7,7 @@
 
 
 
-#define PORT 5059
+#define PORT 5001
 
 
 int main() {
@@ -21,7 +22,7 @@ int main() {
     }
 
     // Create a socket
-    SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (clientSocket == INVALID_SOCKET) {
         printf("Error creating socket: %ld\n", WSAGetLastError());
         WSACleanup();
@@ -44,32 +45,31 @@ int main() {
     printf("Connection to server successful");
     // Receive data from the server
     char buffer[1024];
+    
 
     while (true) {
 
- 
 
+        
         iResult = recv(clientSocket, buffer, sizeof(buffer), 0);
         if (iResult > 0) {
             buffer[iResult] = '\0';
             printf("Received message from server: %s\n", buffer);
         }
+        
         else if (iResult == 0) {
             printf("Connection closed by the server\n");
             break;
         }
-
+        
+        int bytesSent = SOCKET_ERROR;
         //Salje se poruka serveru da je gotovo skladistenje
-        int bytesSent = send(clientSocket, "DONE", 4, 0);
-
-        if (bytesSent == SOCKET_ERROR) {
-            printf("Send failed: %ld\n", WSAGetLastError());
-            break;
-        }
-        else {
-            printf("Receive failed: %d\n", WSAGetLastError());
-            break;
-        }
+        
+            bytesSent = send(clientSocket, "DONE", 5, 0);
+           
+            
+        
+        
     }
 
     // Close the socket

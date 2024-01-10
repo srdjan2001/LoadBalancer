@@ -1,17 +1,6 @@
-﻿  lb_client_com.cpp
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(66,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(70,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(89,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(103,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-  lb_worker_com.cpp
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(59,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(63,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(82,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(111,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-  list.cpp
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\list.h(17,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\list.h(17,15): error C2146: syntax error: missing ';' before identifier 'muteks'
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winnt.h(173,1): fatal error C1189: #error:  "No Target Architecture"
-  main.cpp
-  worker_list.cpp
-  Generating Code...
+﻿  lb_worker_com.cpp
+C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(81,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
+C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(85,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
+C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(107,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
+C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(145,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
+  LB.vcxproj -> C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\x64\Debug\LB.exe
