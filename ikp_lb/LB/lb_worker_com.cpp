@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <winsock2.h>
+#include "worker_list.h"
+#include "list.h"
 
-#define PORT 5059
+#define PORT 10000
 #define MAX_WORKERS 10
 #define BUFFER_SIZE 256
 
@@ -9,7 +11,7 @@
 
 
 
-int handleWorkers() {
+DWORD WINAPI handleWorkers(LPVOID lpParam) {
     WSADATA wsaData;
     SOCKET workerSockets[MAX_WORKERS];
     for (int i = 0; i < MAX_WORKERS; i++) {
@@ -84,13 +86,26 @@ int handleWorkers() {
             for (int i = 0; i < MAX_WORKERS; ++i) {
                 if (workerSockets[i] == 0) {
                     workerSockets[i] = newSocket;
+                    appendToWorkerList(freeWorkers, newSocket);
                     break;
                 }
             }
         }
-        /*
-        * 
-        // Check for data from workers
+        if (sharedList->head != NULL) {
+            int workerSocket = getFirstFreeWorker();
+            char* message = sharedList->head->data;
+            int bytesRead = recv(workerSocket, message, sizeof(message), 0);
+            if (bytesRead <= 0) {
+                // Connection closed or error
+                closesocket(workerSocket);
+                printf("Failed sending the data to the worker");
+
+            }
+            else {
+                removeLastElement(sharedList);
+                moveWorkerNode(freeWorkers, busyWorkers, workerSocket);
+            }
+        }
 
         for (int i = 0; i < MAX_WORKERS; ++i) {
             int workerSocket = workerSockets[i];
@@ -105,12 +120,15 @@ int handleWorkers() {
                 else {
                     // Process the received data
                     buffer[bytesRead] = '\0';
-                    printf("Received message from client %d: %s\n", i, buffer);
+                    printf("Received message from worker %d: %s\n", i, buffer);
+                    if (!strcmp("DONE\0", buffer)) {
+                        moveWorkerNode(busyWorkers, freeWorkers, workerSocket);
+                    }
                     
                 }
             }
         }
-        */
+        
     }
 
     closesocket(serverSocket);

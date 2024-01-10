@@ -131,10 +131,13 @@
     <ClCompile Include="lb_worker_com.cpp" />
     <ClCompile Include="list.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="worker_list.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lb_client_com.h" />
+    <ClInclude Include="lb_worker_com.h" />
     <ClInclude Include="list.h" />
+    <ClInclude Include="worker_list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

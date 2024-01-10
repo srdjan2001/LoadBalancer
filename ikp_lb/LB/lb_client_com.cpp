@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "list.h"
 #include <string.h>
+#include "worker_list.h"
 #define PORT 5059
 #define MAX_CLIENTS 10
 #define BUFFER_SIZE 256
@@ -58,6 +59,7 @@ DWORD WINAPI handleClients(LPVOID lpParam) {
 
     fd_set readSet;
     while (1) {
+        
         FD_ZERO(&readSet);
         FD_SET(serverSocket, &readSet);
 

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "list.h"
 #include <string.h>
+#include <synchapi.h>
+#include <WinBase.h>
 
 
 /*
@@ -60,7 +62,7 @@ void appendToList(List* list, char* value) {
     if (newNode != NULL) {
         strcpy_s(newNode->data, sizeof(value),  value);
         newNode->next = NULL;
-
+        WaitForSingleObject(muteks, INFINITE);
         if (list->head == NULL) {
             list->head = newNode; // If the list is empty, set the new node as the head
         }
@@ -71,6 +73,7 @@ void appendToList(List* list, char* value) {
             }
             current->next = newNode; // Append the new node to the end of the list
         }
+        Releasemuteks(muteks);
     }
 }
 
@@ -97,4 +100,13 @@ char* getLastElement(const List* list) {
         }
         return current->data;
     }
+}
+
+void removeLastElement(List* l) {
+    Node* current = l->head;
+    while (current->next->next != NULL) {
+        current = current->next;
+    }
+    free(current->next);
+    current->next = NULL;
 }
