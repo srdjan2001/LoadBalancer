@@ -53,8 +53,10 @@ void printList(const List* list) {
 List* initializeList() {
     List* newList = (List*)malloc(sizeof(List)); // Allocate memory for the List structure
     if (newList != NULL) {
-        newList->head = NULL; // Initialize the head pointer to NULL for an empty list
+        newList->head = NULL;
+        InitializeCriticalSection(&newList->cs);// Initialize the head pointer to NULL for an empty list
     }
+    
     return newList;
     
 }
@@ -63,6 +65,8 @@ List* initializeList() {
 void appendToList(List* list, char* value) {
     Node* newNode = (Node*)malloc(sizeof(Node)); // Allocate memory for the new node
     if (newNode != NULL) {
+        
+        EnterCriticalSection(&list->cs);
         strcpy_s(newNode->data, sizeof(value),  value);
         newNode->next = NULL;
         
@@ -76,40 +80,41 @@ void appendToList(List* list, char* value) {
             }
             current->next = newNode; // Append the new node to the end of the list
         }
-        
+        LeaveCriticalSection(&list->cs);
     }
 }
 
 // Function to print the elements of the list
-void printList(const List* list) {
-    Node* current = list->head;
-    while (current != NULL) {
-        printf("%s", current->data);
-        current = current->next;
-    }
-    printf("\n");
-}
 
 
-char* getLastElement(const List* list) {
+
+char* getLastElement( List* list) {
     
     if (list->head == NULL) {
         return NULL;
     }
     else {
+        EnterCriticalSection(&list->cs);
         Node* current = list->head;
         while (current->next != NULL) {
             current = current->next;
         }
+        LeaveCriticalSection(&list->cs);
         return current->data;
     }
+    
 }
 
 void removeLastElement(List* l) {
+    EnterCriticalSection(&l->cs);
     if (l->head == NULL) {
+        LeaveCriticalSection(&l->cs);
         return;
     }
+    
     Node* temp = l->head;
     l->head = l->head->next;
     free(temp);
+   
+   LeaveCriticalSection(&l->cs);
 }

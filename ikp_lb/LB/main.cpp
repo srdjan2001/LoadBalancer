@@ -14,6 +14,7 @@
 
 
 HANDLE muteks;
+HANDLE workerMuteks;
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -31,6 +32,7 @@ int main() {
     HANDLE ThreadArray[2];
     DWORD threadId, threadId2;
     muteks = CreateMutex(NULL, FALSE, NULL);
+    workerMuteks = CreateMutex(NULL, FALSE, NULL);
     
      // Example argument to be passed to the thread
 

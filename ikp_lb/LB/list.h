@@ -6,15 +6,18 @@
 typedef struct Node {
     char data[50];
     struct Node* next;
+    
 } Node;
 
 // List structure
 typedef struct {
     Node* head;
+    CRITICAL_SECTION cs;
 } List;
 
 
 extern HANDLE muteks;
+extern HANDLE workerMuteks;
 extern List* sharedList;
 
 

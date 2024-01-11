@@ -13,6 +13,7 @@ typedef struct workerNode {
 // List structure
 typedef struct {
     workerNode* head;
+    CRITICAL_SECTION cs;
 } WorkerList;
 
 extern WorkerList* freeWorkers;
@@ -23,6 +24,8 @@ WorkerList* initalizeWorkerList();
 void appendToWorkerList(WorkerList* list, int workerSocket);
 void moveWorkerNode(WorkerList* from, WorkerList* to, int workerSocket);
 int getFirstFreeWorker();
+void appendToWorkerListEnd(WorkerList* l, workerNode* w);
+
 //void printList(const WorkerList* list);
 //char* getLastElement(const WorkerList* list);
 #endif

@@ -107,7 +107,7 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
             int newSocket = accept(serverSocket, NULL, NULL);
             printf("New connection, socket fd is %d\n", newSocket);
 
-            printf("ALO");
+           ;
             if (newSocket == SOCKET_ERROR) {
                 printf("Error accpeting new client");
             }
@@ -132,7 +132,8 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
             if (bytesRead <= 0) {
                 // Connection closed or error
                 closesocket(workerSocket);
-                printf("Failed sending the data to the worker");
+                workerSocket = 0;
+                //printf("Failed sending the data to the worker");
 
             }
             else {
