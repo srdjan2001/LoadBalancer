@@ -38,7 +38,7 @@ void appendToList(List* list,  char* value) {
         }
     }
 }
-
+*/
 // Print the elements of the list
 void printList(const List* list) {
     Node* current = list->head;
@@ -48,7 +48,7 @@ void printList(const List* list) {
     }
     printf("\n");
 }
-*/
+
 
 List* initializeList() {
     List* newList = (List*)malloc(sizeof(List)); // Allocate memory for the List structure

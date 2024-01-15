@@ -50,6 +50,11 @@ int main() {
         printf("Posaljite poruku za cuvanje \n");
         printf("Za izlazak X\n");
         char message[100];
+        int start = 0;
+        while (isspace((unsigned char)message[0])) {
+            start++;
+        }
+        memmove(message, message + start, 100);
         // scanf_s("%s", message);
         fgets(message, sizeof(message), stdin);
         if (!strcmp(message, "X\n")) {

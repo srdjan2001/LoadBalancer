@@ -23,8 +23,10 @@ void appendToWorkerList(WorkerList* workerList, int workerSocket) {
         newNode->workerSocket = workerSocket;
         
         newNode->next = NULL;
-        for (int i = 0; i < 10; i++) {
-            strcpy_s(newNode->messageArray[i], 1, "\0");
+        newNode->messageCount = 0;
+        
+        for (int i = 0; i < 10; ++i) {
+            strcpy_s(newNode->messageArray[i], "\0");
         }
         if (workerList->head == NULL) {
             workerList->head = newNode;
@@ -52,7 +54,7 @@ void moveWorkerNode(WorkerList* from, WorkerList* to, int workerSocket) {
             from->head = temp->next; // Changed head 
             appendToWorkerListEnd(to, temp);
             
-            printf("Naso sam ga");
+            //printf("Naso sam ga");
             
             LeaveCriticalSection(&to->cs);
             LeaveCriticalSection(&from->cs);
@@ -68,7 +70,7 @@ void moveWorkerNode(WorkerList* from, WorkerList* to, int workerSocket) {
 
         // If key was not present in linked list 
         if (temp == NULL) {
-            printf("Nisam naso sam ga");
+            //printf("Nisam naso sam ga");
             LeaveCriticalSection(&to->cs);
             LeaveCriticalSection(&from->cs);
             return;
@@ -92,7 +94,12 @@ void moveWorkerNode(WorkerList* from, WorkerList* to, int workerSocket) {
 int getFirstFreeWorker() {
     
 
-    return freeWorkers->head->workerSocket;
+    if (freeWorkers->head != NULL) {
+        return freeWorkers->head->workerSocket;
+    }
+    else {
+        return 0;
+    }
     
 }
 
@@ -113,4 +120,36 @@ void appendToWorkerListEnd(WorkerList* list, workerNode* worker) {
         list->head = worker;
     }
     LeaveCriticalSection(&list->cs);
+}
+
+void removeWorker(WorkerList * workerList, int workerSocket) {
+    EnterCriticalSection(&workerList->cs);
+    struct workerNode* temp = workerList->head, * prev = NULL;
+    if (temp != NULL && temp->workerSocket == workerSocket) {
+        workerList->head = temp->next; // Changed head 
+        free(temp);
+
+        //printf("Naso sam ga");
+
+        LeaveCriticalSection(&workerList->cs);
+        
+        return;
+    }
+
+    while (temp != NULL && temp->workerSocket != workerSocket) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        //printf("Nisam naso sam ga");
+        LeaveCriticalSection(&workerList->cs);
+        
+        return;
+    }
+    
+    prev->next = temp->next;
+    free(temp);
+
+    LeaveCriticalSection(&workerList->cs);
 }

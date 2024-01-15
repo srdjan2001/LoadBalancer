@@ -1,15 +1,6 @@
-﻿  lb_client_com.cpp
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(74,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(78,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(101,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_client_com.cpp(115,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-  lb_worker_com.cpp
+﻿  lb_worker_com.cpp
 C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(81,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
 C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(85,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
 C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(107,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(146,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-  list.cpp
-  main.cpp
-  worker_list.cpp
-  Generating Code...
+C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(162,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
   LB.vcxproj -> C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\x64\Debug\LB.exe

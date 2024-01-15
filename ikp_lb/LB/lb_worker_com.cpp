@@ -107,7 +107,7 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
             int newSocket = accept(serverSocket, NULL, NULL);
             printf("New connection, socket fd is %d\n", newSocket);
 
-           ;
+           
             if (newSocket == SOCKET_ERROR) {
                 printf("Error accpeting new client");
             }
@@ -127,16 +127,32 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
         if (sharedList->head != NULL) {
             int workerSocket = getFirstFreeWorker();
             char* message = sharedList->head->data;
-            printf("Uso je u slanje");
+            //printf("Uso je u slanje");
             int bytesRead = send(workerSocket, sharedList->head->data, sizeof(sharedList->head->data), 0);
             if (bytesRead <= 0) {
                 // Connection closed or error
-                closesocket(workerSocket);
-                workerSocket = 0;
+                // Connection closed or error
+                
+                
                 //printf("Failed sending the data to the worker");
 
             }
             else {
+                workerNode* current = freeWorkers->head;
+                
+                        
+                   if (current->messageCount < 10) {
+                       EnterCriticalSection(&freeWorkers->cs);
+                       strcpy_s(current->messageArray[current->messageCount], sharedList->head->data);
+                       int j = current->messageCount;
+                       printf("Worker recieved message %s", current->messageArray[j]);
+                                
+                       current->messageCount++;
+                       LeaveCriticalSection(&freeWorkers->cs);
+                                
+                                
+                   }
+                     
                 removeLastElement(sharedList);
                 moveWorkerNode(freeWorkers, busyWorkers, workerSocket);
             }
@@ -148,10 +164,27 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
                 int bytesRead = recv(workerSocket, buffer, sizeof(buffer), 0);
 
                 if (bytesRead <= 0) {
-                    // Connection closed or error
-                    closesocket(workerSocket);
+                    workerNode* current = freeWorkers->head;
+                   
+                    while (current->workerSocket != workerSocket) {
+                        current = current->next;
+                    }
+
+                       
+                           for (int j = 0; j < current->messageCount; j++) {
+                                
+                                appendToList(sharedList, current->messageArray[j]);
+                           }
+                            
+                       
+                    
+                    removeWorker(freeWorkers, workerSocket);
+                    printList(sharedList);
+                    closesocket(workerSockets[i]);
                     workerSockets[i] = 0;
+                    
                 }
+                
                 else {
                     // Process the received data
                     buffer[bytesRead] = '\0';
@@ -159,6 +192,7 @@ DWORD WINAPI handleWorkers(LPVOID lpParam) {
                     if (!strcmp("DONE\0", buffer)) {
                         moveWorkerNode(busyWorkers, freeWorkers, workerSocket);
                     }
+
                     
                 }
             }

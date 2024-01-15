@@ -42,7 +42,7 @@ int main() {
         WSACleanup();
         return 1;
     }
-    printf("Connection to server successful");
+    printf("Connection to server successful\n");
     // Receive data from the server
     char buffer[1024];
     
@@ -65,9 +65,11 @@ int main() {
         int bytesSent = SOCKET_ERROR;
         //Salje se poruka serveru da je gotovo skladistenje
         
-            bytesSent = send(clientSocket, "DONE", 5, 0);
+       
+        while (send(clientSocket, "DONE", 4, 0) <= 0) {
+            continue;
+        }
            
-            
         
         
     }
