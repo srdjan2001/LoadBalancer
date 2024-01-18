@@ -14,7 +14,7 @@
 
 
 DWORD WINAPI handleWorkers(LPVOID lpParam) {
-    printf("Kurcina");
+    
     //Sleep(100);
     WSADATA wsaData;
     SOCKET workerSockets[MAX_WORKERS];

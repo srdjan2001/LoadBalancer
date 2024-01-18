@@ -16,7 +16,7 @@
 
 
 DWORD WINAPI handleClients(LPVOID lpParam) {
-    printf("Prvi Kurac");
+    
     
 
 

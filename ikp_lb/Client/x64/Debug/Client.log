@@ -1,3 +1,2 @@
-﻿  client.cpp
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\Client\client.cpp(66,71): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+﻿  LINK : C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\x64\Debug\Client.exe not found or not built by the last incremental link; performing full link
   Client.vcxproj -> C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\x64\Debug\Client.exe

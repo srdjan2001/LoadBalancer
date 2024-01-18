@@ -1,6 +1,2 @@
-﻿  lb_worker_com.cpp
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(81,23): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(85,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(107,27): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
-C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\LB\lb_worker_com.cpp(162,30): warning C4244: 'initializing': conversion from 'SOCKET' to 'int', possible loss of data
+﻿  LINK : C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\x64\Debug\LB.exe not found or not built by the last incremental link; performing full link
   LB.vcxproj -> C:\Users\nikol\Desktop\LoadBalancer\ikp_lb\x64\Debug\LB.exe
